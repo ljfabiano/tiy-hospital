@@ -10,9 +10,6 @@ public class HospitalRunner
     public static void main(String[] args)
     {
         System.out.println("HospitalRunner.main() ...");
-
-        //HospitalDoctor firstDoc = new SurgicalOncologist("James", "Glavin", "MIT");
-        //Patient firstPatient = new Patient("David", "Polk");
         Scanner inputScan = new Scanner(System.in);
         Hospital myHospital = new Hospital();
         //Ask the user for the doctors at the hospital
@@ -25,43 +22,10 @@ public class HospitalRunner
 
         myHospital.setListPatients(patientlist);
 
-        //SurgicalOncologist docTest = new SurgicalOncologist(fName, lName, college, speciality);
-
-        //System.out.println("Please enter the number of patients in the hospital:");
-        //int numPatients = Integer.valueOf(inputScan.nextLine());
-
-        //System.out.println("Please enter the first name of patient 1");
-        //String fNam = inputScan.nextLine();
-
-        //System.out.println("Please enter the last name of patient 1");
-        //String lNam = inputScan.nextLine();
-
-        //System.out.println("Please enter the illness of patient 1");
-        //String illness = inputScan.nextLine();
-        //Person[] personList = new Person[numDoctors];
-        //enterDoctorData(personList, inputScan);
-
-        //myHospital.setListDoctors(); docList =  Person();
-        //myHospital.setListDoctors();
-        //for each doctor, ask which specialty the doctor is
-        //After the doctors have all been added, ask for patient information
-        //System.out.println("Please enter the number of patients in the hospital:");
-        //int numPatients = Integer.valueOf(inputScan.nextLine());
-        //Patient information must include the illness of the patient
-
         //Try to match up the patient's illness with a doctor with the proper specialty
         //If there are no doctors to treat that patient's illness, display a message asking them to go to a different hospital
         //If there is a doctor to treat the patient's illness, then have the doctor treat the patient and display the result of the treatment to the user
         matchToDoctor(myHospital.getListDoctors(), myHospital.getListPatients());
-
-        /*if (firstDoc instanceof SurgicalOncologist) {
-            boolean success = ((SurgicalOncologist)firstDoc).operate(firstPatient);
-            if (success) {
-                System.out.println("Successful operation!");
-            } else {
-                System.out.println("Operation failed!!!");
-            }
-        }*/
 
         System.out.println("HospitalRunner.main() - done!");
     }
@@ -139,10 +103,6 @@ public class HospitalRunner
                 } else {
                     docList[docIndex] = new GeneralDiagnostician(fName, lName, college, speciality);
                 }
-                //pArray[personIndex] = new Person(fName, lName);
-                //pArray[personIndex] = new HospitalDoctor();//Doctor(fName, lName);
-
-
             }
 
             System.out.println("Thank you for entering the doctor data.");
