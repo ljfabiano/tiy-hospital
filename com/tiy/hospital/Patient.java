@@ -6,6 +6,16 @@ package com.tiy.hospital;
 public class Patient extends Person {
     private boolean isSick = true;
 
+    private int illness;
+
+    public int getIllness() {
+        return illness;
+    }
+
+    public void setIllness(int illness) {
+        this.illness = illness;
+    }
+
     public boolean isSick() {
         return isSick;
     }
@@ -14,7 +24,8 @@ public class Patient extends Person {
         isSick = sick;
     }
 
-    public Patient(String firstName, String lastName) {
+    public Patient(String firstName, String lastName, int illness) {
         super(firstName, lastName);
+        this.illness = illness;
     }
 }

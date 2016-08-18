@@ -5,4 +5,5 @@ package com.tiy.hospital;
  */
 public interface Doctor {
     public Diagnosis diagnose();
+
 }

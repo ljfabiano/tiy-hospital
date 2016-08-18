@@ -6,6 +6,7 @@ package com.tiy.hospital;
 public class Person {
     private String firstName;
     private String lastName;
+    //private String illness;
 
     public Person() {
     }
@@ -13,6 +14,7 @@ public class Person {
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        //this.illness = illness;
     }
 
     public String getFirstName() {

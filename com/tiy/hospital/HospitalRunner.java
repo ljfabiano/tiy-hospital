@@ -1,24 +1,185 @@
 package com.tiy.hospital;
 
+import java.util.Scanner;
+
 /**
  * Created by dbashizi on 8/16/16.
  */
-public class HospitalRunner {
-    public static void main(String[] args) {
+public class HospitalRunner
+{
+    public static void main(String[] args)
+    {
         System.out.println("HospitalRunner.main() ...");
 
-        HospitalDoctor firstDoc = new SurgicalOncologist("James", "Glavin", "MIT");
-        Patient firstPatient = new Patient("David", "Polk");
+        //HospitalDoctor firstDoc = new SurgicalOncologist("James", "Glavin", "MIT");
+        //Patient firstPatient = new Patient("David", "Polk");
+        Scanner inputScan = new Scanner(System.in);
+        Hospital myHospital = new Hospital();
+        //Ask the user for the doctors at the hospital
 
-        if (firstDoc instanceof SurgicalOncologist) {
+        HospitalDoctor[] doctorList = enterDoctorData(inputScan);
+
+        myHospital.setListDoctors(doctorList);
+
+        Patient[] patientlist = enterPatientData(inputScan);
+
+        myHospital.setListPatients(patientlist);
+
+        //SurgicalOncologist docTest = new SurgicalOncologist(fName, lName, college, speciality);
+
+        //System.out.println("Please enter the number of patients in the hospital:");
+        //int numPatients = Integer.valueOf(inputScan.nextLine());
+
+        //System.out.println("Please enter the first name of patient 1");
+        //String fNam = inputScan.nextLine();
+
+        //System.out.println("Please enter the last name of patient 1");
+        //String lNam = inputScan.nextLine();
+
+        //System.out.println("Please enter the illness of patient 1");
+        //String illness = inputScan.nextLine();
+        //Person[] personList = new Person[numDoctors];
+        //enterDoctorData(personList, inputScan);
+
+        //myHospital.setListDoctors(); docList =  Person();
+        //myHospital.setListDoctors();
+        //for each doctor, ask which specialty the doctor is
+        //After the doctors have all been added, ask for patient information
+        //System.out.println("Please enter the number of patients in the hospital:");
+        //int numPatients = Integer.valueOf(inputScan.nextLine());
+        //Patient information must include the illness of the patient
+
+        //Try to match up the patient's illness with a doctor with the proper specialty
+        //If there are no doctors to treat that patient's illness, display a message asking them to go to a different hospital
+        //If there is a doctor to treat the patient's illness, then have the doctor treat the patient and display the result of the treatment to the user
+        matchToDoctor(myHospital.getListDoctors(), myHospital.getListPatients());
+
+        /*if (firstDoc instanceof SurgicalOncologist) {
             boolean success = ((SurgicalOncologist)firstDoc).operate(firstPatient);
             if (success) {
                 System.out.println("Successful operation!");
             } else {
                 System.out.println("Operation failed!!!");
             }
-        }
+        }*/
 
         System.out.println("HospitalRunner.main() - done!");
     }
-}
+
+    public static void matchToDoctor(HospitalDoctor[] docList, Patient[] patList)
+    {
+
+        //String treatmentResult;
+
+        for (int patIndex = 0; patIndex < patList.length; patIndex++)
+        {
+
+            for (int docIndex = 0; docIndex < docList.length; docIndex++) {
+
+                if (patList[patIndex].getIllness() == docList[docIndex].getSpeciality()) {
+                    //If there is a doctor to treat the patient's illness, then have the doctor treat the patient and display the result of the treatment to the user
+                    if (docList[docIndex] instanceof SurgicalOncologist) {
+                        boolean success = ((SurgicalOncologist) docList[docIndex]).operate(patList[patIndex]);
+                        if (success) {
+                            System.out.println("Successful operation!");
+                        } else {
+                            System.out.println("Operation failed!!!");
+                        }
+                    } else if (docList[docIndex] instanceof GeneralDiagnostician)
+                    {
+                        boolean success = ((GeneralDiagnostician) docList[docIndex]).prescribeMedication(patList[patIndex]);
+                            //System.out.println("Successful prescription given!");
+                        if (success) {
+                            System.out.println("Successful prescription given!");
+                        } else {
+                            System.out.println("Prescription not given!");
+                        }
+                    }
+                    else  if(docIndex == (docList.length -1))
+                    {
+                        System.out.println("Sorry. We don't have the required personnel to treat you here. Please check another hospital.");
+                        break;
+                    }
+
+                }
+            }
+
+            }
+        }
+        public static HospitalDoctor[] enterDoctorData (Scanner cScanner)
+        {
+
+            String fName;
+            String lName;
+            String college;
+            //String illness;
+            int speciality;
+            System.out.println("Please enter the number of doctors in the hospital:");
+            int numDoctors = Integer.valueOf(cScanner.nextLine());
+            HospitalDoctor[] docList = new HospitalDoctor[numDoctors];
+
+            for (int docIndex = 0; docIndex < docList.length; docIndex++) {
+
+                System.out.println("Please enter the first name of doctor " + (docIndex + 1) + ":");
+                fName = cScanner.nextLine();
+
+                System.out.println("Please enter the last name of doctor " + (docIndex + 1) + ":");
+                lName = cScanner.nextLine();
+
+                System.out.println("Please enter the college doctor " + (docIndex + 1) + " attended:");
+                college = cScanner.nextLine();
+
+                System.out.println("Please enter the speciality of doctor " + (docIndex + 1) + ":");
+                System.out.println("Type 1 for Surgical Oncologist\nType 2 for Lung Specialist\nType 3 for General Diagnostician");
+                speciality = Integer.valueOf(cScanner.nextLine());
+
+                if (speciality == 1) {
+                    docList[docIndex] = new SurgicalOncologist(fName, lName, college, speciality);
+                } else if (speciality == 2) {
+                    docList[docIndex] = new LungSpecialist(fName, lName, college, speciality);
+                } else {
+                    docList[docIndex] = new GeneralDiagnostician(fName, lName, college, speciality);
+                }
+                //pArray[personIndex] = new Person(fName, lName);
+                //pArray[personIndex] = new HospitalDoctor();//Doctor(fName, lName);
+
+
+            }
+
+            System.out.println("Thank you for entering the doctor data.");
+            return docList;
+        }
+        public static Patient[] enterPatientData (Scanner cScanner){
+
+            String fName;
+            String lName;
+
+            int illness;
+
+            System.out.println("Please enter the number of patients in the hospital:");
+            int numPatients = Integer.valueOf(cScanner.nextLine());
+            Patient[] patList = new Patient[numPatients];
+
+            for (int patIndex = 0; patIndex < patList.length; patIndex++) {
+
+                System.out.println("Please enter the first name of patient " + (patIndex + 1) + ":");
+                fName = cScanner.nextLine();
+
+                System.out.println("Please enter the last name of patient " + (patIndex + 1) + ":");
+                lName = cScanner.nextLine();
+
+                System.out.println("Please enter the illness of patient " + (patIndex + 1) + ":");
+                System.out.println("Type 1 for Lung Cancer\nType 2 for Brain Cancer\nType 3 for Common Cold\nType 4 for Strep Throat");
+                illness = Integer.valueOf(cScanner.nextLine());
+
+
+                patList[patIndex] = new Patient(fName, lName, illness);
+
+            }
+
+            System.out.println("Thank you for entering the patient data.");
+            return patList;
+        }
+    }
+
+
