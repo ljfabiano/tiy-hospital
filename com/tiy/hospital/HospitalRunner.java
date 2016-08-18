@@ -73,12 +73,13 @@ public class HospitalRunner
 
         for (int patIndex = 0; patIndex < patList.length; patIndex++)
         {
-
+            boolean foundDoctor = false;
             for (int docIndex = 0; docIndex < docList.length; docIndex++) {
 
                 if (patList[patIndex].getIllness() == docList[docIndex].getSpeciality()) {
                     //If there is a doctor to treat the patient's illness, then have the doctor treat the patient and display the result of the treatment to the user
                     if (docList[docIndex] instanceof SurgicalOncologist) {
+                        foundDoctor = true;
                         boolean success = ((SurgicalOncologist) docList[docIndex]).operate(patList[patIndex]);
                         if (success) {
                             System.out.println("Successful operation!");
@@ -87,6 +88,7 @@ public class HospitalRunner
                         }
                     } else if (docList[docIndex] instanceof GeneralDiagnostician)
                     {
+                        foundDoctor = true;
                         boolean success = ((GeneralDiagnostician) docList[docIndex]).prescribeMedication(patList[patIndex]);
                             //System.out.println("Successful prescription given!");
                         if (success) {
@@ -95,15 +97,12 @@ public class HospitalRunner
                             System.out.println("Prescription not given!");
                         }
                     }
-                    else  if(docIndex == (docList.length -1))
-                    {
-                        System.out.println("Sorry. We don't have the required personnel to treat you here. Please check another hospital.");
-                        break;
-                    }
 
                 }
             }
-
+            if (foundDoctor == false) {
+                System.out.println("No doctor for your illness");
+            }
             }
         }
         public static HospitalDoctor[] enterDoctorData (Scanner cScanner)
@@ -130,7 +129,7 @@ public class HospitalRunner
                 college = cScanner.nextLine();
 
                 System.out.println("Please enter the speciality of doctor " + (docIndex + 1) + ":");
-                System.out.println("Type 1 for Surgical Oncologist\nType 2 for Lung Specialist\nType 3 for General Diagnostician");
+                System.out.println("Type 1 for Lung Specialist\nType 2 for Surgical Oncologist\nType 3 for General Diagnostician");
                 speciality = Integer.valueOf(cScanner.nextLine());
 
                 if (speciality == 1) {
